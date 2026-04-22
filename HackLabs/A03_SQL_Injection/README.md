@@ -54,6 +54,3 @@ Demostrar la vulnerabilidad de Inyección SQL (SQLi) en el campo de búsqueda de
 
 ## 🏁 Conclusión
 El laboratorio A03 de HackLabs demuestra de forma efectiva el impacto crítico de una inyección SQL. Una simple vulnerabilidad web permitió comprometer completamente el servidor y obtener privilegios de administrador. Se recomienda el uso de consultas parametrizadas y una gestión de contraseñas segura para mitigar este tipo de ataques.
-
-## 🏁 Conclusión
-El laboratorio A03 de HackLabs demuestra de forma efectiva el impacto crítico de una inyección SQL. Una simple vulnerabilidad web permitió comprometer completamente el servidor y obtener privilegios de administrador. Se recomienda el uso de consultas parametrizadas y una gestión de contraseñas segura para mitigar este tipo de ataques.
