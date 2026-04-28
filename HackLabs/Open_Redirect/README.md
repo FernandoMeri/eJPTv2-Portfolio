@@ -17,15 +17,16 @@ Demostrar la vulnerabilidad de Open Redirect presente en el parámetro de destin
     - Se introdujo `https://www.wikipedia.org` para demostrar la redirección a otro dominio arbitrario.
 
 ### Evidencia Técnica (petición HTTP):
-```bash
 curl -v "http://10.10.10.115/open_redirect?url=https://www.google.com" 2>&1 | grep -E "Location:|GET"
 > GET /open_redirect?url=https://www.google.com HTTP/1.1
 < Location: https://www.google.com
 
-La cabecera Location: en la respuesta del servidor confirma la redirección no validada.
-🧠 Lecciones Aprendidas
-Validación de URLs de Redirección: Es fundamental validar cualquier parámetro de redirección contra una lista blanca (whitelist) de dominios permitidos o usar redirecciones relativas.
-Confianza del Usuario: Un atacante puede aprovechar esta vulnerabilidad para crear enlaces de phishing convincentes, ya que la URL base pertenece a un sitio de confianza.
-Impacto en la Reputación: Un portal legítimo puede ser utilizado como puente para redirigir a los usuarios a sitios de descargas maliciosas o formularios de robo de credenciales, dañando la reputación del sitio original.
-🏁 Conclusión
-El laboratorio de Open Redirect demuestra una vulnerabilidad de seguridad web común pero peligrosa. La ausencia de validación en el parámetro url permite a un atacante redirigir a los usuarios a cualquier sitio externo, facilitando ataques de phishing y otros engaños.
+La cabecera `Location:` en la respuesta del servidor confirma la redirección no validada.
+
+## 🧠 Lecciones Aprendidas
+1.  **Validación de URLs de Redirección:** Es fundamental validar cualquier parámetro de redirección contra una lista blanca (whitelist) de dominios permitidos o usar redirecciones relativas.
+2.  **Confianza del Usuario:** Un atacante puede aprovechar esta vulnerabilidad para crear enlaces de phishing convincentes, ya que la URL base pertenece a un sitio de confianza.
+3.  **Impacto en la Reputación:** Un portal legítimo puede ser utilizado como puente para redirigir a los usuarios a sitios de descargas maliciosas o formularios de robo de credenciales, dañando la reputación del sitio original.
+
+## 🏁 Conclusión
+El laboratorio de Open Redirect demuestra una vulnerabilidad de seguridad web común pero peligrosa. La ausencia de validación en el parámetro `url` permite a un atacante redirigir a los usuarios a cualquier sitio externo, facilitando ataques de phishing y otros engaños.
