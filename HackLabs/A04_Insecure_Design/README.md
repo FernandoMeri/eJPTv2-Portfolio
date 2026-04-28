@@ -20,35 +20,17 @@ Demostrar una vulnerabilidad de diseño inseguro en el proceso de recuperación 
 ### Método 2: Script Python
 - Se creó un script en Python para automatizar el ataque de fuerza bruta utilizando el diccionario `rockyou.txt`.
 - El script probó iterativamente cada palabra como respuesta hasta encontrar `Rex`.
-- **Código del script:**
-```python
-import requests
 
-url_recover  = "http://10.10.10.194/recover"
-url_answer   = "http://10.10.10.194/recover/answer"
-username     = "admin"
-wordlist     = [line.strip() for line in open("/usr/share/wordlists/rockyou.txt", errors="ignore")]
+### Método 3: Burp Intruder
+- Se interceptó la petición `POST /recover/answer` con Burp Suite.
+- Se envió a **Intruder** y se configuró un ataque tipo **Sniper** sobre el parámetro `answer`.
+- Se cargó una lista de nombres comunes de mascotas como payload.
+- El ataque identificó `Rex` como la respuesta válida por la diferencia en la longitud de la respuesta.
 
-r = requests.post(url_recover, data={"username": username})
-print(f"[*] Pregunta obtenida para {username}")
+## 🧠 Lecciones Aprendidas
+1.  **Preguntas de Seguridad Robustas:** Las preguntas de recuperación no deben basarse en información fácilmente adivinable.
+2.  **Rate-Limiting:** Los procesos de recuperación deben implementar límites de intentos para prevenir ataques de fuerza bruta.
+3.  **Múltiples Métodos de Explotación:** Un mismo fallo puede ser explotado con herramientas manuales, scripts y suites profesionales como Burp.
 
-for word in wordlist:
-    r = requests.post(url_answer, data={"username": username, "answer": word})
-    if "password" in r.text.lower() and "incorrecta" not in r.text.lower():
-        print(f"[+] Respuesta correcta: {word}")
-        print(r.text)
-        break
-
-Método 3: Burp Intruder
-Se interceptó la petición POST /recover/answer con Burp Suite.
-Se envió a Intruder y se configuró un ataque tipo Sniper sobre el parámetro answer.
-Se cargó una lista de nombres comunes de mascotas como payload.
-El ataque identificó Rex como la respuesta válida por la diferencia en la longitud de la respuesta.
-
-🧠 Lecciones Aprendidas
-Preguntas de Seguridad Robustas: Las preguntas de recuperación no deben basarse en información fácilmente adivinable.
-Rate-Limiting: Los procesos de recuperación deben implementar límites de intentos para prevenir ataques de fuerza bruta.
-Múltiples Métodos de Explotación: Un mismo fallo puede ser explotado con herramientas manuales, scripts y suites profesionales como Burp.
-
-🏁 Conclusión
+## 🏁 Conclusión
 El laboratorio A04 demuestra cómo un diseño inseguro en el flujo de recuperación de contraseña, combinando una pregunta predecible y la ausencia de rate-limiting, permite a un atacante comprometer una cuenta de usuario. La demostración con tres métodos distintos prueba la contundencia de la vulnerabilidad.
